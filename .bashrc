@@ -175,6 +175,7 @@ alias c='clear'
 alias less='less -cRS -# 4'
 alias cgrep="grep --color=always"
 alias svi='sudo vi'
+alias ttmux='tmux new-session -A'
 
 # Apt
 if [ "$(id -u)" -ne 0 ]; then
