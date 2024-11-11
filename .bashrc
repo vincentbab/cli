@@ -4,24 +4,93 @@ case $- in
       *) return;;
 esac
 
+ascii_char() {
+  local char="${1,,}"
+  case "$char" in
+    a) echo "       "; echo "       "; echo "  __ _ "; echo " / _\` |"; echo "| (_| |"; echo " \\__,_|"; echo "       "; echo "       "; ;;
+    b) echo " _     "; echo "| |    "; echo "| |__  "; echo "| '_ \\ "; echo "| |_) |"; echo "|_.__/ "; echo "       "; echo "       "; ;;
+    c) echo "      "; echo "      "; echo "  ___ "; echo " / __|"; echo "| (__ "; echo " \\___|"; echo "      "; echo "      "; ;;
+    d) echo "     _ "; echo "    | |"; echo "  __| |"; echo " / _\` |"; echo "| (_| |"; echo " \\__,_|"; echo "       "; echo "       "; ;;
+    e) echo "      "; echo "      "; echo "  ___ "; echo " / _ \\"; echo "|  __/"; echo " \\___|"; echo "      "; echo "      "; ;;
+    f) echo "  __ "; echo " / _|"; echo "| |_ "; echo "|  _|"; echo "| |  "; echo "|_|  "; echo "     "; echo "     "; ;;
+    g) echo "       "; echo "       "; echo "  __ _ "; echo " / _\` |"; echo "| (_| |"; echo " \\__, |"; echo "  __/ |"; echo " |___/ "; ;;
+    h) echo " _     "; echo "| |    "; echo "| |__  "; echo "| '_ \\ "; echo "| | | |"; echo "|_| |_|"; echo "       "; echo "       "; ;;
+    i) echo " _ "; echo "(_)"; echo " _ "; echo "| |"; echo "| |"; echo "|_|"; echo "   "; echo "   "; ;;
+    j) echo "   _ "; echo "  (_)"; echo "   _ "; echo "  | |"; echo "  | |"; echo "  | |"; echo " _/ |"; echo "|__/ "; ;;
+    k) echo " _    "; echo "| |   "; echo "| | __"; echo "| |/ /"; echo "|   < "; echo "|_|\\_\\"; echo "      "; echo "      "; ;;
+    l) echo " _ "; echo "| |"; echo "| |"; echo "| |"; echo "| |"; echo "|_|"; echo "   "; echo "   "; ;;
+    m) echo "           "; echo "           "; echo " _ __ ___  "; echo "| '_ \` _ \\ "; echo "| | | | | |"; echo "|_| |_| |_|"; echo "           "; echo "           "; ;;
+    n) echo "       "; echo "       "; echo " _ __  "; echo "| '_ \\ "; echo "| | | |"; echo "|_| |_|"; echo "       "; echo "       "; ;;
+    o) echo "       "; echo "       "; echo "  ___  "; echo " / _ \\ "; echo "| (_) |"; echo " \\___/ "; echo "       "; echo "       "; ;;
+    p) echo "       "; echo "       "; echo " _ __  "; echo "| '_ \\ "; echo "| |_) |"; echo "| .__/ "; echo "| |    "; echo "|_|    "; ;;
+    q) echo "       "; echo "       "; echo "  __ _ "; echo " / _\` |"; echo "| (_| |"; echo " \\__, |"; echo "    | |"; echo "    |_|"; ;;
+    r) echo "      "; echo "      "; echo " _ __ "; echo "| '__|"; echo "| |   "; echo "|_|   "; echo "      "; echo "      "; ;;
+    s) echo "     "; echo "     "; echo " ___ "; echo "/ __|"; echo "\\__ \\"; echo "|___/"; echo "     "; echo "     "; ;;
+    t) echo " _   "; echo "| |  "; echo "| |_ "; echo "| __|"; echo "| |_ "; echo " \\__|"; echo "     "; echo "     "; ;;
+    u) echo "       "; echo "       "; echo " _   _ "; echo "| | | |"; echo "| |_| |"; echo " \\__,_|"; echo "       "; echo "       "; ;;
+    v) echo "       "; echo "       "; echo "__   __"; echo "\\ \\ / /"; echo " \\ V / "; echo "  \\_/  "; echo "       "; echo "       "; ;;
+    w) echo "          "; echo "          "; echo "__      __"; echo "\\ \\ /\\ / /"; echo " \\ V  V / "; echo "  \\_/\\_/  "; echo "          "; echo "          "; ;;
+    x) echo "      "; echo "      "; echo "__  __"; echo "\\ \\/ /"; echo " >  < "; echo "/_/\\_\\"; echo "      "; echo "      "; ;;
+    y) echo "       "; echo "       "; echo " _   _ "; echo "| | | |"; echo "| |_| |"; echo " \\__, |"; echo "  __/ |"; echo " |___/ "; ;;
+    z) echo "     "; echo "     "; echo " ____"; echo "|_  /"; echo " / / "; echo "/___|"; echo "     "; echo "     "; ;;
+    -) echo "        "; echo "        "; echo " ______ "; echo "|______|"; echo "        "; echo "        "; echo "        "; echo "        "; ;;
+    .) echo "   "; echo "   "; echo "   "; echo "   "; echo " _ "; echo "(_)"; echo "   "; echo "   "; ;;
+    0) echo "  ___  "; echo " / _ \\ "; echo "| | | |"; echo "| | | |"; echo "| |_| |"; echo " \\___/ "; echo "       "; echo "       "; ;;
+    1) echo " __ "; echo "/_ |"; echo " | |"; echo " | |"; echo " | |"; echo " |_|"; echo "    "; echo "    "; ;;
+    2) echo " ___  "; echo "|__ \\ "; echo "   ) |"; echo "  / / "; echo " / /_ "; echo "|____|"; echo "      "; echo "      "; ;;
+    3) echo " ____  "; echo "|___ \\ "; echo "  __) |"; echo " |__ < "; echo " ___) |"; echo "|____/ "; echo "       "; echo "       "; ;;
+    4) echo " _  _   "; echo "| || |  "; echo "| || |_ "; echo "|__   _|"; echo "   | |  "; echo "   |_|  "; echo "        "; echo "        "; ;;
+    5) echo " _____ "; echo "| ____|"; echo "| |__  "; echo "|___ \\ "; echo " ___) |"; echo "|____/ "; echo "       "; echo "       "; ;;
+    6) echo "   __  "; echo "  / /  "; echo " / /_  "; echo "| '_ \\ "; echo "| (_) |"; echo " \\___/ "; echo "       "; echo "       "; ;;
+    7) echo " ______ "; echo "|____  |"; echo "    / / "; echo "   / /  "; echo "  / /   "; echo " /_/    "; echo "        "; echo "        "; ;;
+    8) echo "  ___  "; echo " / _ \\ "; echo "| (_) |"; echo " > _ < "; echo "| (_) |"; echo " \\___/ "; echo "       "; echo "       "; ;;
+    9) echo "  ___  "; echo " / _ \\ "; echo "| (_) |"; echo " \\__, |"; echo "   / / "; echo "  /_/  "; echo "       "; echo "       "; ;;
+    *) echo "?"; echo "?"; echo "?"; echo "?"; echo "?"; echo "?"; echo "?"; echo "?"; ;;
+  esac
+}
 
+print_ascii() {
+    local chars=($(echo "$1" | fold -w1))
+    for i in {1..8}; do
+        line=""
+        for char in "${chars[@]}"; do
+            line+=$(ascii_char "$char" | sed -n "${i}p")"  "
+        done
+        echo "$line"
+    done
+}
+
+hash_color() {
+    local COLORS=(
+      28 34 41 47 49 76  # 70 vert
+      21 27 33 39 45 51 75  # bleu
+      57 92 99 129 183 207  # 170 violet
+      172 178 184 191 220 227  # 142 jaune
+    )
+    local hash=$(echo -n "$1" | cksum | awk '{print $1}')
+    echo -n "${COLORS[hash % ${#COLORS[@]}]}"
+}
+
+
+export HOST_COLOR=$(hash_color $HOSTNAME)
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 if [[ $0 == -* ]]; then
     clear -x
-    echo -e "Welcome \e[0;38;5;34m$(whoami)\e[0;2m@\e[0;38;5;39m$(hostname)\e[0m 🙂"
-    printf '\e[2m%*s\e[0m\n' "$(tput cols)" '' | sed 's/ /━/g'
-    echo -e "🖥️ \e[32mSystem:\e[0;38;5;85m $(awk -F= '/^PRETTY_NAME/{print $2}' /etc/os-release | tr -d '"')\e[0m,\e[38;5;39m Kernel $(awk '{print $3}' /proc/version)\e[2m #$(awk -F'#' '{print $2}' /proc/versin | sed 's/^ *//')\e[0m"
-    echo -e "⚡ \e[32mCPU:\e[0m \e[0;38;5;85m$(grep -m 1 'model name' /proc/cpuinfo | awk -F': ' '{print $2}')\e[0m with \e[0;38;5;39m$(grep -c '^processor' /proc/cpuinfo) cores\e[0m @ \e[0;38;5;214m$(grep -m 1 'cpu MHz' /proc/cpuinfo | awk '{printf "%.2f GHz", $4 / 1000}')\e[0m"
-    echo -e "🧮 \e[32mRAM:\e[0m \e[0;38;5;85m$(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {used=total-available; printf "%.1fG", used/1024/1024}' /proc/meminfo)\e[0m / \e[0;38;5;39m$(awk '/MeTotal/ {printf "%.1fG", $2/1024/1024}' /proc/meminfo)\e[0m"
-    echo -e "🗂️ \e[32mDisk: $(df -Th -x tmpfs -x devtmpfs | awk 'NR>1 {print "\\e[0;38;5;39m" $1 "\\e[0;2m:\\e[38;5;39m" $2 "\\e[0;2m -> \\e[0;32m" $7 " \\e[0;2m[\\e[0;38;5;202m" $4 "\\e[0;2m / \\e[0;38;5;196m $3 "\\e[0;2m] \\e[0;38;5;214m" $6}' | sed ':a;N;$!ba;s/\n/\n      /g')\e[0m"
-    echo -e "🕒 \e[32mUptime:\e[0m $(uptime -p)\e[0m"
-    echo -e "📊 \e[32mLoad Avg: \e[38;5;154m$(awk '{print $1}' /proc/loadavg)\e[0m \e[38;5;113m$(awk '{print $2}' /proc/loadavg)\e[0m \e[38;5;29m$(awk '{print $3}' /proc/loadavg)\e[0m"
-    echo -e "🌐 \e[32mIP Addresses: \e[0;4m$(hostname -I | awk '{$1=$1; print}' OFS='\\e[0;2m, \\e[0;4m')\e[0m"
-    echo -e "🌍 \e[32mDNS: \e[0;4m$(grep -oP 'nameserver \K.*' /etc/resolv.conf | awk '{$1=$1; print}' OFS='\\e[0;2m, \\e[0;4m')\e[0m"
-    printf '\e[2m%*s\e[0m\n' "$(tput cols)" '' | sed 's/ /━/g'
+    printf "\e[0;38;5;${HOST_COLOR}m"
+    print_ascii $HOSTNAME
+    printf '\e[0;2m%*s\e[0m\n' "$(tput cols)" '' | sed 's/ /━/g'
+    echo -e "🖥️ \e[0;38;5;${HOST_COLOR}mSystem:\e[0;38;5;85m $(awk -F= '/^PRETTY_NAME/{print $2}' /etc/os-release | tr -d '"')\e[0m,\e[38;5;39m Kernel $(awk '{print $3}' /proc/version)\e[2m #$(awk -F'#' '{print $2}' /proc/version | sed 's/^ *//')\e[0m"
+    echo -e "⚡ \e[0;38;5;${HOST_COLOR}mCPU:\e[0m \e[0;38;5;85m$(grep -m 1 'model name' /proc/cpuinfo | awk -F': ' '{print $2}')\e[0m with \e[0;38;5;39m$(grep -c '^processor' /proc/cpuinfo) cores\e[0m @ \e[0;38;5;214m$(grep -m 1 'cpu MHz' /proc/cpuinfo | awk '{printf "%.2f GHz", $4 / 1000}')\e[0m"
+    echo -e "🧮 \e[0;38;5;${HOST_COLOR}mRAM:\e[0m \e[0;38;5;85m$(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {used=total-available; printf "%.1fG", used/1024/1024}' /proc/meminfo)\e[0m / \e[0;38;5;39m$(awk '/MemTotal/ {printf "%.1fG", $2/1024/1024}' /proc/meminfo)\e[0m"
+    echo -e "🗂️ \e[0;38;5;${HOST_COLOR}mDisk: $(df -Th -x tmpfs -x devtmpfs | awk 'NR>1 {print "\\e[0;38;5;39m" $1 "\\e[0;2m:\\e[38;5;39m" $2 "\\e[0;2m -> \\e[0;32m" $7 " \\e[0;2m[\\e[0;38;5;202m" $4 "\\e[0;2m / \\e[0;38;5;196m" $3 "\\e[0;2m] \\e[0;38;5;214m" $6}' | sed ':a;N;$!ba;s/\n/\n      /g')\e[0m"
+    echo -e "🕒 \e[0;38;5;${HOST_COLOR}mUptime:\e[0m $(uptime -p)\e[0m"
+    echo -e "📊 \e[0;38;5;${HOST_COLOR}mLoad Avg: \e[38;5;154m$(awk '{print $1}' /proc/loadavg)\e[0m \e[38;5;113m$(awk '{print $2}' /proc/loadavg)\e[0m \e[38;5;29m$(awk '{print $3}' /proc/loadavg)\e[0m"
+    echo -e "🌐 \e[0;38;5;${HOST_COLOR}mIP Addresses: \e[0;4m$(hostname -I | awk '{$1=$1; print}' OFS='\\e[0;2m, \\e[0;4m')\e[0m"
+    echo -e "🌍 \e[0;38;5;${HOST_COLOR}mDNS: \e[0;4m$(grep -oP 'nameserver \K.*' /etc/resolv.conf | awk '{$1=$1; print}' OFS='\\e[0;2m, \\e[0;4m')\e[0m"
+    printf '\e[0;2m%*s\e[0m\n' "$(tput cols)" '' | sed 's/ /━/g'
 fi
 
 
@@ -33,7 +102,15 @@ shopt -s histappend
 shopt -s checkwinsize
 shopt -s globstar
 
-PS1='\[\e[2m\][\[\e[0m\]\t\[\e[0;2m\]]\[\e[0;38;5;34m\]\u\[\e[0;2m\]@\[\e[0;38;5;39m\]\h\[\e[0;2m\]:\[\e[0m\]\w\[\e[1;2m\]\$\[\e[0m\] '
+username_color() {
+    if [ "$UID" -eq 0 ]; then
+        echo -n "\[\e[0;38;5;1m\]"
+    else
+        echo -n "\[\e[0;38;5;34m\]"
+    fi
+}
+
+PS1='\[\e[2m\][\[\e[0m\]\t\[\e[0;2m\]]'"$(username_color)"'\u\[\e[0;2m\]@\[\e[0;38;5;'"$(hash_color $HOSTNAME)"'m\]\h\[\e[0;2m\]:\[\e[0m\]\w\[\e[1;2m\]\$\[\e[0m\] '
 PS1="\[\e]0;\u@\h: \w\a\]$PS1"
 
 if [ -x /usr/bin/dircolors ]; then
