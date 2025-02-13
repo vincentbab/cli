@@ -4,3 +4,26 @@
 ```bash
 wget -O ~/.bashrc https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.bashrc
 ```
+## utilities
+Debian 12
+```bash
+apt update && apt install vim nano htop iotop iftop dnsutils net-tools curl wget traceroute rsync git ca-certificates
+```
+
+## docker
+
+https://docs.docker.com/engine/install/debian/
+
+```bash
+for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done; \
+curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc; \
+chmod a+r /etc/apt/keyrings/docker.asc; \
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null; \
+apt update
+```
+
+```bash
+apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
