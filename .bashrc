@@ -236,6 +236,24 @@ alias dce='dc exec'
 dcebash() { dce $1 bash; }
 dcesh() { dce $1 sh; }
 
+# bak
+bak() {
+    if [[ -e "$1" ]]; then  # Vérifie si le fichier, dossier ou symlink existe
+        if [[ -f "$1" || -L "$1" ]]; then  # Vérifie si c'est un fichier régulier ou un symlink
+            cp --preserve=all "$1" "$1.bak"
+            echo "Backup created: $1.bak"
+        elif [[ -d "$1" ]]; then
+            cp -r --preserve=all "$1" "$1.bak"
+            echo "Backup of directory created: $1.bak/"
+        else
+            echo "Error: \"$1\" is neither a valid file, symlink, nor directory."
+        fi
+    else
+        echo "Error: \"$1\" does not exist."
+    fi
+}
+
+
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
