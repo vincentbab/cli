@@ -237,6 +237,9 @@ alias dce='dc exec'
 dcebash() { dce $1 bash; }
 dcesh() { dce $1 sh; }
 
+# tmux
+alias mux='tmux a || tmux'
+
 # file backup
 bak() {
     if [[ -e "$1" ]]; then  # Vérifie si le fichier, dossier ou symlink existe
