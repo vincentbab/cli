@@ -262,9 +262,9 @@ clip() {
 
 # update
 updateconf() {
-    wget -O ~/.bashrc https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.bashrc
-    wget -O ~/.vimrc https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.vimrc
-    wget -O ~/.tmux.conf https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.tmux.conf
+    wget -q -O ~/.bashrc https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.bashrc
+    wget -q -O ~/.vimrc https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.vimrc
+    wget -q -O ~/.tmux.conf https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.tmux.conf
 }
 
 if [ -f ~/.bash_aliases ]; then
