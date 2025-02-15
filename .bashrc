@@ -78,23 +78,6 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export EDITOR=vim
 
-if [[ $0 == -* ]]; then
-    clear -x
-    printf "\e[0;38;5;${HOST_COLOR}m"
-    print_ascii $HOSTNAME
-    printf '\e[0;2m%*s\e[0m\n' "$(tput cols)" '' | sed 's/ /━/g'
-    echo -e "🖥️ \e[0;38;5;${HOST_COLOR}mSystem:\e[0;38;5;85m $(awk -F= '/^PRETTY_NAME/{print $2}' /etc/os-release | tr -d '"')\e[0m,\e[38;5;39m Kernel $(awk '{print $3}' /proc/version)\e[2m #$(awk -F'#' '{print $2}' /proc/version | sed 's/^ *//')\e[0m"
-    echo -e "⚡ \e[0;38;5;${HOST_COLOR}mCPU:\e[0m \e[0;38;5;85m$(grep -m 1 'model name' /proc/cpuinfo | awk -F': ' '{print $2}')\e[0m with \e[0;38;5;39m$(grep -c '^processor' /proc/cpuinfo) cores\e[0m @ \e[0;38;5;214m$(grep -m 1 'cpu MHz' /proc/cpuinfo | awk '{printf "%.2f GHz", $4 / 1000}')\e[0m"
-    echo -e "🧮 \e[0;38;5;${HOST_COLOR}mRAM:\e[0m \e[0;38;5;85m$(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {used=total-available; printf "%.1fG", used/1024/1024}' /proc/meminfo)\e[0m / \e[0;38;5;39m$(awk '/MemTotal/ {printf "%.1fG", $2/1024/1024}' /proc/meminfo)\e[0m"
-    echo -e "🗂️ \e[0;38;5;${HOST_COLOR}mDisk: $(df -Th -x tmpfs -x devtmpfs -x overlay | awk 'NR>1 {print "\\e[0;38;5;39m" $1 "\\e[0;2m:\\e[38;5;39m" $2 "\\e[0;2m -> \\e[0;32m" $7 " \\e[0;2m[\\e[0;38;5;202m" $4 "\\e[0;2m / \\e[0;38;5;196m" $3 "\\e[0;2m] \\e[0;38;5;214m" $6}' | sed ':a;N;$!ba;s/\n/\n         /g')\e[0m"
-    echo -e "🕒 \e[0;38;5;${HOST_COLOR}mUptime:\e[0m $(uptime -p)\e[0m"
-    echo -e "📊 \e[0;38;5;${HOST_COLOR}mLoad Avg: \e[38;5;154m$(awk '{print $1}' /proc/loadavg)\e[0m \e[38;5;113m$(awk '{print $2}' /proc/loadavg)\e[0m \e[38;5;29m$(awk '{print $3}' /proc/loadavg)\e[0m"
-    echo -e "🌐 \e[0;38;5;${HOST_COLOR}mIP Addresses: \e[0;4m$(hostname -I | awk '{$1=$1; print}' OFS='\\e[0;2m, \\e[0;4m')\e[0m"
-    echo -e "🌍 \e[0;38;5;${HOST_COLOR}mDNS: \e[0;4m$(grep -oP 'nameserver \K.*' /etc/resolv.conf | tr '\n' ' ' | awk '{$1=$1; print}' OFS='\\e[0;2m, \\e[0;4m')\e[0m"
-    printf '\e[0;2m%*s\e[0m\n' "$(tput cols)" '' | sed 's/ /━/g'
-fi
-
-
 HISTCONTROL=ignoreboth
 HISTSIZE=1000
 HISTFILESIZE=2000
@@ -102,6 +85,9 @@ HISTFILESIZE=2000
 shopt -s histappend
 shopt -s checkwinsize
 shopt -s globstar
+
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
 
 username_color() {
     if [ "$UID" -eq 0 ]; then
@@ -176,7 +162,8 @@ alias c='clear'
 alias less='less -cRS -# 4'
 alias cgrep="grep --color=always"
 alias svi='sudo vi'
-alias ttmux='tmux new-session -A'
+alias mux='tmux new-session -A'
+alias colors='for i in {0..255}; do printf "\e[48;5;${i}m\e[38;5;15m  %03d  \e[0m " $i; if (( (i + 1) % 16 == 0 )); then echo; fi; done'
 
 # Apt
 if [ "$(id -u)" -ne 0 ]; then
@@ -237,9 +224,6 @@ alias dce='dc exec'
 dcebash() { dce $1 bash; }
 dcesh() { dce $1 sh; }
 
-# tmux
-alias mux='tmux a || tmux'
-
 # file backup
 bak() {
     if [[ -e "$1" ]]; then  # Vérifie si le fichier, dossier ou symlink existe
@@ -270,14 +254,33 @@ updateconf() {
     wget -q -O ~/.tmux.conf https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.tmux.conf
 }
 
+# load bash_aliases
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# load bash completions
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
+fi
+
+# Welcome message
+if [[ $0 == -* ]]; then
+    clear -x
+    printf "\e[0;38;5;${HOST_COLOR}m"
+    print_ascii $HOSTNAME
+    printf '\e[0;2m%*s\e[0m\n' "$(tput cols)" '' | sed 's/ /━/g'
+    echo -e "🖥️ \e[0;38;5;${HOST_COLOR}mSystem:\e[0;38;5;85m $(awk -F= '/^PRETTY_NAME/{print $2}' /etc/os-release | tr -d '"')\e[0m,\e[38;5;39m Kernel $(awk '{print $3}' /proc/version)\e[2m #$(awk -F'#' '{print $2}' /proc/version | sed 's/^ *//')\e[0m"
+    echo -e "⚡ \e[0;38;5;${HOST_COLOR}mCPU:\e[0m \e[0;38;5;85m$(grep -m 1 'model name' /proc/cpuinfo | awk -F': ' '{print $2}')\e[0m with \e[0;38;5;39m$(grep -c '^processor' /proc/cpuinfo) cores\e[0m @ \e[0;38;5;214m$(grep -m 1 'cpu MHz' /proc/cpuinfo | awk '{printf "%.2f GHz", $4 / 1000}')\e[0m"
+    echo -e "🧮 \e[0;38;5;${HOST_COLOR}mRAM:\e[0m \e[0;38;5;85m$(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {used=total-available; printf "%.1fG", used/1024/1024}' /proc/meminfo)\e[0m / \e[0;38;5;39m$(awk '/MemTotal/ {printf "%.1fG", $2/1024/1024}' /proc/meminfo)\e[0m"
+    echo -e "🗂️ \e[0;38;5;${HOST_COLOR}mDisk: $(df -Th -x tmpfs -x devtmpfs -x overlay | awk 'NR>1 {print "\\e[0;38;5;39m" $1 "\\e[0;2m:\\e[38;5;39m" $2 "\\e[0;2m -> \\e[0;32m" $7 " \\e[0;2m[\\e[0;38;5;202m" $4 "\\e[0;2m / \\e[0;38;5;196m" $3 "\\e[0;2m] \\e[0;38;5;214m" $6}' | sed ':a;N;$!ba;s/\n/\n         /g')\e[0m"
+    echo -e "🕒 \e[0;38;5;${HOST_COLOR}mUptime:\e[0m $(uptime -p)\e[0m"
+    echo -e "📊 \e[0;38;5;${HOST_COLOR}mLoad Avg: \e[38;5;154m$(awk '{print $1}' /proc/loadavg)\e[0m \e[38;5;113m$(awk '{print $2}' /proc/loadavg)\e[0m \e[38;5;29m$(awk '{print $3}' /proc/loadavg)\e[0m"
+    echo -e "🌐 \e[0;38;5;${HOST_COLOR}mIP Addresses: \e[0;4m$(hostname -I | awk '{$1=$1; print}' OFS='\\e[0;2m, \\e[0;4m')\e[0m"
+    echo -e "🌍 \e[0;38;5;${HOST_COLOR}mDNS: \e[0;4m$(grep -oP 'nameserver \K.*' /etc/resolv.conf | tr '\n' ' ' | awk '{$1=$1; print}' OFS='\\e[0;2m, \\e[0;4m')\e[0m"
+    printf '\e[0;2m%*s\e[0m\n' "$(tput cols)" '' | sed 's/ /━/g'
 fi
