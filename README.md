@@ -10,6 +10,13 @@ wget -O ~/.bashrc https://raw.githubusercontent.com/vincentbab/cli/refs/heads/ma
 wget -O ~/.vimrc https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.vimrc
 ```
 
+## tmux.conf
+
+start ssh with tmux:
+```bash
+ssh USER@HOST -t -- /bin/sh -c "tmux has-session && exec tmux attach || exec tmux"
+```
+
 ## utilities
 Debian 12
 ```bash
