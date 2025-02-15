@@ -76,6 +76,7 @@ export HOST_COLOR=$(hash_color $HOSTNAME)
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
+export EDITOR=vim
 
 if [[ $0 == -* ]]; then
     clear -x
@@ -167,7 +168,7 @@ fi
 
 # bashrc
 alias bashrc='. ~/.bashrc'
-alias vibashrc='vi ~/.bashrc'
+alias vibashrc='$EDITOR ~/.bashrc'
 
 # Misc
 alias quit="exit"
@@ -236,7 +237,7 @@ alias dce='dc exec'
 dcebash() { dce $1 bash; }
 dcesh() { dce $1 sh; }
 
-# bak
+# file backup
 bak() {
     if [[ -e "$1" ]]; then  # Vérifie si le fichier, dossier ou symlink existe
         if [[ -f "$1" || -L "$1" ]]; then  # Vérifie si c'est un fichier régulier ou un symlink
@@ -253,6 +254,18 @@ bak() {
     fi
 }
 
+# copy to clipboard
+clip() {
+    echo -n "$(cat)" | base64 | \
+    echo -e "\033]52;p;$(cat)$(base64)\007"
+}
+
+# update
+updateconf() {
+    wget -O ~/.bashrc https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.bashrc
+    wget -O ~/.vimrc https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.vimrc
+    wget -O ~/.tmux.conf https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.tmux.conf
+}
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
