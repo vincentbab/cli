@@ -4,10 +4,16 @@
 ```bash
 wget -O ~/.bashrc https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.bashrc
 ```
+
+## vimrc
+```bash
+wget -O ~/.vimrc https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.vimrc
+```
+
 ## utilities
 Debian 12
 ```bash
-apt update && apt install vim nano htop iotop iftop dnsutils net-tools curl wget traceroute rsync git ca-certificates
+apt update && apt install vim nano htop iotop iftop dnsutils net-tools whois netcat-openbsd iputils-ping curl wget traceroute rsync git ca-certificates
 ```
 
 ## docker
