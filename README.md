@@ -11,6 +11,9 @@ wget -O ~/.vimrc https://raw.githubusercontent.com/vincentbab/cli/refs/heads/mai
 ```
 
 ## tmux.conf
+```bash
+wget -O ~/.tmux.conf https://raw.githubusercontent.com/vincentbab/cli/refs/heads/main/.tmux.conf
+```
 
 start ssh with tmux:
 ```bash
