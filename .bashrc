@@ -89,6 +89,10 @@ shopt -s globstar
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
 
+if [ -f ~/.bashrc.local ]; then
+    source ~/.bashrc.local
+fi
+
 username_color() {
     if [ "$UID" -eq 0 ]; then
         echo -n "\[\e[0;38;5;1m\]"
@@ -98,7 +102,7 @@ username_color() {
 }
 
 PS1='\[\e[2m\][\[\e[0m\]\t\[\e[0;2m\]]'"$(username_color)"'\u\[\e[0;2m\]@\[\e[0;38;5;'"$(hash_color $HOSTNAME)"'m\]\h\[\e[0;2m\]:\[\e[0m\]\w\[\e[1;2m\]\$\[\e[0m\] '
-PS1="\[\e]0;\u@\h: \w\a\]$PS1"
+PS1="\[\e]0;\u@\h: \w\a\]$PS1" # window title
 
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
