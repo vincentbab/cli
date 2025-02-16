@@ -49,21 +49,60 @@ ascii_char() {
   esac
 }
 
+print_line() {
+    printf '\e[0;2m%*s\e[0m\n' "$(tput cols)" '' | sed 's/ /━/g'
+}
 print_ascii() {
     local chars=($(echo "$1" | fold -w1))
     for i in {1..8}; do
         line=""
         for char in "${chars[@]}"; do
-            line+=$(ascii_char "$char" | sed -n "${i}p")"  "
+            line+=$(ascii_char "$char" | sed -n "${i}p")" "
         done
         echo "$line"
     done
 }
 
+print_ascii_truncate() {
+    local term_width=$(tput cols)
+    local chars=($(echo "$1" | fold -w1))
+    local total_width=0
+    local max_chars=0
+    local widths=()
+
+    # Compute widths
+    for char in "${chars[@]}"; do
+        local char_width=$(ascii_char "$char" | awk '{print length}' | sort -nr | head -n1)
+        widths+=("$char_width")
+        (( total_width += char_width + 2 ))  # Ajout de l'espacement entre caractères
+
+        if (( total_width > term_width )); then
+            break
+        fi
+
+        (( max_chars++ ))
+    done
+
+    chars=("${chars[@]:0:max_chars}")
+    widths=("${widths[@]:0:max_chars}")
+
+    # Display
+    for i in {1..8}; do
+        line=""
+        for index in "${!chars[@]}"; do
+            local char="${chars[$index]}"
+            local ascii_line=$(ascii_char "$char" | sed -n "${i}p")
+            line+="$ascii_line "
+        done
+        echo "$line"
+    done
+}
+
+
 hash_color() {
     local COLORS=(
       28 34 41 47 49 76  # 70 vert
-      21 27 33 39 45 51 75  # bleu
+      21 39 33 27 45 51 75  # bleu
       57 92 99 129 183 207  # 170 violet
       172 178 184 191 220 227  # 142 jaune
     )
@@ -276,8 +315,8 @@ fi
 if [[ $0 == -* ]]; then
     clear -x
     printf "\e[0;38;5;${HOST_COLOR}m"
-    print_ascii $HOSTNAME
-    printf '\e[0;2m%*s\e[0m\n' "$(tput cols)" '' | sed 's/ /━/g'
+    print_ascii_truncate $HOSTNAME
+    print_line
     echo -e "🖥️ \e[0;38;5;${HOST_COLOR}mSystem:\e[0;38;5;85m $(awk -F= '/^PRETTY_NAME/{print $2}' /etc/os-release | tr -d '"')\e[0m,\e[38;5;39m Kernel $(awk '{print $3}' /proc/version)\e[2m #$(awk -F'#' '{print $2}' /proc/version | sed 's/^ *//')\e[0m"
     echo -e "⚡ \e[0;38;5;${HOST_COLOR}mCPU:\e[0m \e[0;38;5;85m$(grep -m 1 'model name' /proc/cpuinfo | awk -F': ' '{print $2}')\e[0m with \e[0;38;5;39m$(grep -c '^processor' /proc/cpuinfo) cores\e[0m @ \e[0;38;5;214m$(grep -m 1 'cpu MHz' /proc/cpuinfo | awk '{printf "%.2f GHz", $4 / 1000}')\e[0m"
     echo -e "🧮 \e[0;38;5;${HOST_COLOR}mRAM:\e[0m \e[0;38;5;85m$(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {used=total-available; printf "%.1fG", used/1024/1024}' /proc/meminfo)\e[0m / \e[0;38;5;39m$(awk '/MemTotal/ {printf "%.1fG", $2/1024/1024}' /proc/meminfo)\e[0m"
@@ -286,5 +325,5 @@ if [[ $0 == -* ]]; then
     echo -e "📊 \e[0;38;5;${HOST_COLOR}mLoad Avg: \e[38;5;154m$(awk '{print $1}' /proc/loadavg)\e[0m \e[38;5;113m$(awk '{print $2}' /proc/loadavg)\e[0m \e[38;5;29m$(awk '{print $3}' /proc/loadavg)\e[0m"
     echo -e "🌐 \e[0;38;5;${HOST_COLOR}mIP Addresses: \e[0;4m$(hostname -I | awk '{$1=$1; print}' OFS='\\e[0;2m, \\e[0;4m')\e[0m"
     echo -e "🌍 \e[0;38;5;${HOST_COLOR}mDNS: \e[0;4m$(grep -oP 'nameserver \K.*' /etc/resolv.conf | tr '\n' ' ' | awk '{$1=$1; print}' OFS='\\e[0;2m, \\e[0;4m')\e[0m"
-    printf '\e[0;2m%*s\e[0m\n' "$(tput cols)" '' | sed 's/ /━/g'
+    print_line
 fi
