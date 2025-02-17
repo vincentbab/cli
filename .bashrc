@@ -311,6 +311,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+    tmux has-session && exec tmux attach || exec tmux
+    return
+fi
+
 # Welcome message
 if [[ $0 == -* ]]; then
     clear -x
