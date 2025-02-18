@@ -311,7 +311,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+if command -v tmux &> /dev/null && [ -z "$TMUX" ] && [ -z "$NO_TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
     tmux has-session && exec tmux attach || exec tmux
     return
 fi
