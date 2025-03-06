@@ -267,6 +267,20 @@ alias dce='dc exec'
 dcebash() { dce $1 bash; }
 dcesh() { dce $1 sh; }
 
+# Kubernetes
+alias k='kubectl'
+alias kg='k get'
+alias kgpod='kg pod'
+alias kgservice='kg services'
+alias kgservices='kg services'
+alias kdes='k describe'
+alias kdespod='kdes pod'
+alias kcp='k cp'
+alias klog='k logs -f'
+alias ka='k apply -f'
+alias kdel='k delete -f'
+alias kexec='k exec -it'
+
 # file backup
 bak() {
     if [[ -e "$1" ]]; then  # Vérifie si le fichier, dossier ou symlink existe
