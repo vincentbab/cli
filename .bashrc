@@ -303,6 +303,8 @@ clip() {
     echo -n "$(cat)" | base64 | \
     echo -e "\033]52;p;$(cat)$(base64)\007"
 }
+# paste from clipboard to file
+alias paste='cat >'
 
 # update
 updateconf() {
