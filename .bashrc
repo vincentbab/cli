@@ -204,8 +204,9 @@ alias quit="exit"
 alias c='clear'
 alias less='less -cRS -# 4'
 alias cgrep="grep --color=always"
+alias sudo='sudo -E'
 alias svi='sudo vi'
-alias sbash='sudo -E bash'
+alias sbash='sudo bash'
 alias mux='tmux new-session -A'
 alias colors='for i in {0..255}; do printf "\e[48;5;${i}m\e[38;5;15m  %03d  \e[0m " $i; if (( (i + 1) % 16 == 0 )); then echo; fi; done'
 
