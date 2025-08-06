@@ -159,7 +159,7 @@ if tty -s && [ -n "$TERM" ] && [ "$TERM" != dumb ] && [ -n "$GRC" ]; then
     alias docker-compose='colourify docker-compose'
     alias docker-machine='colourify docker-machine'
     alias du='colourify du'
-#    alias env='colourify env'
+    alias env='colourify env'
     alias free='colourify free'
     alias fdisk='colourify fdisk'
     alias findmnt='colourify findmnt'
@@ -174,7 +174,7 @@ if tty -s && [ -n "$TERM" ] && [ "$TERM" != dumb ] && [ -n "$GRC" ]; then
     alias journalctl='colourify journalctl'
     alias kubectl='colourify kubectl'
     alias ld='colourify ld'
-#   alias ls='colourify ls'
+    alias ls='colourify ls --color=always'
     alias lsof='colourify lsof'
     alias lsblk='colourify lsblk'
     alias lspci='colourify lspci'
@@ -230,7 +230,7 @@ alias psa='ps aux'
 
 # ls
 alias ll='ls -l'
-alias lll='ls --color=always -la | less'
+alias lll='ls -la | less'
 alias l='ls -lA'
 alias la='ls -la'
 
