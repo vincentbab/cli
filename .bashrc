@@ -224,11 +224,11 @@ alias hgrep='history | grep'
 alias hless='history | less'
 
 # Sysadmin
+alias dfh='df -h -x overlay -x overlay2 -x tmpfs -x squashfs'
 alias most='du -hsx * | sort -rh | head -10'
 alias psa='ps aux'
 
 # ls
-alias ls='ls --color=auto'
 alias ll='ls -l'
 alias lll='ls --color=always -la | less'
 alias l='ls -lA'
