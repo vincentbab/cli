@@ -23,7 +23,7 @@ ssh USER@HOST -t -- /bin/sh -c "tmux has-session && exec tmux attach || exec tmu
 ## utilities
 Debian 12
 ```bash
-apt update && apt install vim nano htop iotop iftop dnsutils net-tools whois netcat-openbsd iputils-ping curl wget traceroute rsync git ca-certificates grc ncdu
+apt update && apt install vim nano htop iotop iftop dnsutils net-tools whois netcat-openbsd iputils-ping curl wget traceroute rsync git ca-certificates grc ncdu jq
 ```
 
 ## docker
