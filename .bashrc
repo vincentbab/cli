@@ -224,7 +224,7 @@ alias hgrep='history | grep'
 alias hless='history | less'
 
 # Sysadmin
-alias dfh='df -Th -x overlay -x overlay2 -x tmpfs -x squashfs'
+alias dfh='df -Th -x overlay -x overlay2 -x tmpfs -x devtmpfs -x squashfs'
 alias most='du -hsx * | sort -rh | head -10'
 alias psa='ps aux'
 
@@ -343,7 +343,7 @@ if [[ $0 == -* ]]; then
     echo -e "🖥️ \e[0;38;5;${HOST_COLOR}mSystem:\e[0;38;5;85m $(awk -F= '/^PRETTY_NAME/{print $2}' /etc/os-release | tr -d '"')\e[0m,\e[38;5;39m Kernel $(awk '{print $3}' /proc/version)\e[2m #$(awk -F'#' '{print $2}' /proc/version | sed 's/^ *//')\e[0m"
     echo -e "⚡ \e[0;38;5;${HOST_COLOR}mCPU:\e[0m \e[0;38;5;85m$(grep -m 1 'model name' /proc/cpuinfo | awk -F': ' '{print $2}')\e[0m with \e[0;38;5;39m$(grep -c '^processor' /proc/cpuinfo) cores\e[0m @ \e[0;38;5;214m$(grep -m 1 'cpu MHz' /proc/cpuinfo | awk '{printf "%.2f GHz", $4 / 1000}')\e[0m"
     echo -e "🧮 \e[0;38;5;${HOST_COLOR}mRAM:\e[0m \e[0;38;5;85m$(awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {used=total-available; printf "%.1fG", used/1024/1024}' /proc/meminfo)\e[0m / \e[0;38;5;39m$(awk '/MemTotal/ {printf "%.1fG", $2/1024/1024}' /proc/meminfo)\e[0m"
-    echo -e "💽 \e[0;38;5;${HOST_COLOR}mDisk: $(df -Th -x tmpfs -x devtmpfs -x overlay -x squashfs | awk 'NR>1 {print "\\e[0;38;5;39m" $1 "\\e[0;2m:\\e[38;5;39m" $2 "\\e[0;2m -> \\e[0;32m" $7 " \\e[0;2m[\\e[0;38;5;202m" $4 "\\e[0;2m / \\e[0;38;5;196m" $3 "\\e[0;2m] \\e[0;38;5;214m" $6}' | sed ':a;N;$!ba;s/\n/\n         /g')\e[0m"
+    echo -e "💽 \e[0;38;5;${HOST_COLOR}mDisk: $(df -Th -x tmpfs -x devtmpfs -x overlay -x overlay2 -x squashfs | awk 'NR>1 {print "\\e[0;38;5;39m" $1 "\\e[0;2m:\\e[38;5;39m" $2 "\\e[0;2m -> \\e[0;32m" $7 " \\e[0;2m[\\e[0;38;5;202m" $4 "\\e[0;2m / \\e[0;38;5;196m" $3 "\\e[0;2m] \\e[0;38;5;214m" $6}' | sed ':a;N;$!ba;s/\n/\n         /g')\e[0m"
     echo -e "🕒 \e[0;38;5;${HOST_COLOR}mUptime:\e[0m $(uptime -p)\e[0m"
     echo -e "📊 \e[0;38;5;${HOST_COLOR}mLoad Avg: \e[38;5;154m$(awk '{print $1}' /proc/loadavg)\e[0m \e[38;5;113m$(awk '{print $2}' /proc/loadavg)\e[0m \e[38;5;29m$(awk '{print $3}' /proc/loadavg)\e[0m"
     echo -e "🌐 \e[0;38;5;${HOST_COLOR}mIP Addresses: \e[0;4m$(hostname -I | awk '{$1=$1; print}' OFS='\\e[0;2m, \\e[0;4m')\e[0m"
